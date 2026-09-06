@@ -1,0 +1,536 @@
+name: Build CarTV Playlist
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 4 * * *"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: cartv-playlist
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Build playlist
+        shell: bash
+        run: |
+          python3 <<'PY'
+          import urllib.request
+          import re
+
+          BASE = "https://iptv-org.github.io/iptv/"
+
+          SOURCES = {
+              "arabic": BASE + "languages/ara.m3u",
+              "egypt": BASE + "countries/eg.m3u",
+              "music": BASE + "categories/music.m3u",
+              "relax": BASE + "categories/relax.m3u",
+              "religious": BASE + "categories/religious.m3u",
+          }
+
+          MAX_EGYPT = 40
+          MAX_MUSIC = 20
+          MAX_POP = 10
+          MAX_JAZZ = 5
+          MAX_CHILL = 10
+          MAX_ISLAMIC = 20
+
+          EXCLUDE = [
+              "kids",
+              "kid",
+              "cartoon",
+              "cartoons",
+              "children",
+              "junior",
+              "nickelodeon",
+              "nick jr",
+              "disney junior",
+              "boomerang",
+              "rock",
+              "classic rock",
+              "hard rock",
+          ]
+
+          MUSIC_PRIORITY = [
+              "Mazzika",
+              "Rotana Music",
+              "Rotana Khalijia",
+              "Rotana Clip",
+              "Rotana Classic",
+              "Wanasah",
+              "Aghani Aghani",
+              "Arabica TV",
+              "Melody Hits",
+              "Melody Classic",
+              "Tarab",
+              "Nogoum FM",
+              "Najoom FM",
+          ]
+
+          EGYPT_PRIORITY = [
+              "MBC Masr",
+              "MBC Masr 2",
+              "DMC",
+              "CBC",
+              "ON",
+              "ON E",
+              "Al Hayat",
+              "Al Nahar",
+              "Sada El Balad",
+              "Sada El Balad 2",
+              "Al Mehwar",
+              "TEN",
+              "Nile Life",
+              "Nile Comedy",
+              "Nile Family",
+              "Nile Culture",
+          ]
+
+          ISLAMIC_PRIORITY = [
+              "Saudi Quran",
+              "Saudi Quran TV",
+              "Saudi Sunnah",
+              "Saudi Sunnah TV",
+              "Al Quran Al Kareem",
+              "Al Sunnah Al Nabawiyah",
+              "Al Majd Quran",
+              "Al Majd Hadith",
+              "Iqraa",
+              "Iqra",
+          ]
+
+          def download(url):
+              req = urllib.request.Request(
+                  url,
+                  headers={"User-Agent": "Mozilla/5.0"}
+              )
+              with urllib.request.urlopen(req, timeout=120) as response:
+                  return response.read().decode(
+                      "utf-8",
+                      errors="ignore"
+                  )
+
+          def normalize(value):
+              value = str(value or "").lower()
+              value = re.sub(
+                  r"[^a-z0-9\u0600-\u06ff]+",
+                  " ",
+                  value
+              )
+              return " ".join(value.split())
+
+          def parse_m3u(data):
+              result = []
+              extinf = None
+
+              for line in data.splitlines():
+                  line = line.strip()
+
+                  if line.startswith("#EXTINF"):
+                      extinf = line
+                      continue
+
+                  if (
+                      extinf
+                      and (
+                          line.startswith("http://")
+                          or line.startswith("https://")
+                      )
+                  ):
+                      result.append({
+                          "extinf": extinf,
+                          "url": line
+                      })
+                      extinf = None
+
+              return result
+
+          def get_name(entry):
+              extinf = entry["extinf"]
+
+              match = re.search(
+                  r'tvg-name="([^"]*)"',
+                  extinf,
+                  re.IGNORECASE
+              )
+
+              if match:
+                  return match.group(1).strip()
+
+              if "," in extinf:
+                  return extinf.split(",", 1)[1].strip()
+
+              return ""
+
+          def channel_text(entry):
+              return normalize(
+                  get_name(entry) + " " + entry["extinf"]
+              )
+
+          def excluded(entry):
+              text = channel_text(entry)
+
+              return any(
+                  normalize(word) in text
+                  for word in EXCLUDE
+              )
+
+          def add_group(entry, group):
+              extinf = entry["extinf"]
+
+              extinf = re.sub(
+                  r'\s*group-title="[^"]*"',
+                  "",
+                  extinf,
+                  flags=re.IGNORECASE
+              )
+
+              if extinf.startswith("#EXTINF"):
+                  extinf = re.sub(
+                      r"#EXTINF:(-?\d+)",
+                      r'#EXTINF:\1 group-title="' + group + '"',
+                      extinf,
+                      count=1
+                  )
+
+              return {
+                  "extinf": extinf,
+                  "url": entry["url"]
+              }
+
+          playlists = {}
+
+          for key, url in SOURCES.items():
+              print("Downloading:", key)
+
+              try:
+                  playlists[key] = parse_m3u(
+                      download(url)
+                  )
+                  print(
+                      key,
+                      "channels:",
+                      len(playlists[key])
+                  )
+              except Exception as error:
+                  print(
+                      "ERROR downloading",
+                      key,
+                      error
+                  )
+                  playlists[key] = []
+
+          final = []
+          used_ids = set()
+          used_urls = set()
+
+          def add_entry(entry, group=None):
+              if excluded(entry):
+                  return False
+
+              name = normalize(get_name(entry))
+              url = entry["url"]
+
+              if not name:
+                  return False
+
+              if name in used_ids:
+                  return False
+
+              if url in used_urls:
+                  return False
+
+              used_ids.add(name)
+              used_urls.add(url)
+
+              if group:
+                  entry = add_group(entry, group)
+
+              final.append(entry)
+              return True
+
+          # ============================================================
+          # 1. ORIGINAL ARABIC PLAYLIST FIRST
+          # ============================================================
+
+          arabic_count = 0
+
+          for entry in playlists["arabic"]:
+              if add_entry(entry):
+                  arabic_count += 1
+
+          # ============================================================
+          # 2. EXTRA EGYPTIAN CHANNELS
+          # ============================================================
+
+          egypt_count = 0
+
+          for wanted in EGYPT_PRIORITY:
+              if egypt_count >= MAX_EGYPT:
+                  break
+
+              wanted = normalize(wanted)
+
+              for entry in playlists["egypt"]:
+                  name = normalize(get_name(entry))
+
+                  if (
+                      wanted == name
+                      or wanted in name
+                      or name in wanted
+                  ):
+                      if add_entry(
+                          entry,
+                          "🇪🇬 Egyptian"
+                      ):
+                          egypt_count += 1
+                      break
+
+          for entry in playlists["egypt"]:
+              if egypt_count >= MAX_EGYPT:
+                  break
+
+              if add_entry(
+                  entry,
+                  "🇪🇬 Egyptian"
+              ):
+                  egypt_count += 1
+
+          # ============================================================
+          # 3. ARABIC MUSIC
+          # ============================================================
+
+          music_count = 0
+
+          for wanted in MUSIC_PRIORITY:
+              if music_count >= MAX_MUSIC:
+                  break
+
+              wanted = normalize(wanted)
+
+              for entry in playlists["music"]:
+                  name = normalize(get_name(entry))
+
+                  if (
+                      wanted == name
+                      or wanted in name
+                      or name in wanted
+                  ):
+                      if add_entry(
+                          entry,
+                          "🎵 Arabic Music"
+                      ):
+                          music_count += 1
+                      break
+
+          # ============================================================
+          # 4. POP
+          # ============================================================
+
+          pop_count = 0
+
+          for entry in playlists["music"]:
+              if pop_count >= MAX_POP:
+                  break
+
+              text = channel_text(entry)
+
+              if "rock" in text:
+                  continue
+
+              if (
+                  "pop" not in text
+                  and "hits" not in text
+              ):
+                  continue
+
+              if add_entry(
+                  entry,
+                  "🎤 Pop"
+              ):
+                  pop_count += 1
+
+          # ============================================================
+          # 5. JAZZ
+          # ============================================================
+
+          jazz_count = 0
+
+          for entry in playlists["music"]:
+              if jazz_count >= MAX_JAZZ:
+                  break
+
+              if "jazz" not in channel_text(entry):
+                  continue
+
+              if add_entry(
+                  entry,
+                  "🎷 Jazz"
+              ):
+                  jazz_count += 1
+
+          # ============================================================
+          # 6. CHILL / LOUNGE
+          # ============================================================
+
+          chill_count = 0
+
+          for entry in playlists["relax"]:
+              if chill_count >= MAX_CHILL:
+                  break
+
+              if add_entry(
+                  entry,
+                  "🌙 Chill & Lounge"
+              ):
+                  chill_count += 1
+
+          for entry in playlists["music"]:
+              if chill_count >= MAX_CHILL:
+                  break
+
+              text = channel_text(entry)
+
+              if not any(
+                  word in text
+                  for word in [
+                      "lounge",
+                      "chill",
+                      "chillout",
+                      "relax",
+                      "ambient",
+                      "smooth",
+                  ]
+              ):
+                  continue
+
+              if add_entry(
+                  entry,
+                  "🌙 Chill & Lounge"
+              ):
+                  chill_count += 1
+
+          # ============================================================
+          # 7. ISLAMIC
+          # ============================================================
+
+          islamic_count = 0
+
+          for wanted in ISLAMIC_PRIORITY:
+              if islamic_count >= MAX_ISLAMIC:
+                  break
+
+              wanted = normalize(wanted)
+
+              for entry in playlists["religious"]:
+                  name = normalize(get_name(entry))
+
+                  if (
+                      wanted == name
+                      or wanted in name
+                      or name in wanted
+                  ):
+                      if add_entry(
+                          entry,
+                          "🕌 Islamic"
+                      ):
+                          islamic_count += 1
+                      break
+
+          for entry in playlists["religious"]:
+              if islamic_count >= MAX_ISLAMIC:
+                  break
+
+              text = channel_text(entry)
+
+              if not any(
+                  word in text
+                  for word in [
+                      "quran",
+                      "qur an",
+                      "sunnah",
+                      "hadith",
+                      "iqraa",
+                      "iqra",
+                      "islam",
+                      "islamic",
+                      "majd",
+                      "makkah",
+                      "mecca",
+                      "madinah",
+                      "madina",
+                      "saudi",
+                  ]
+              ):
+                  continue
+
+              if add_entry(
+                  entry,
+                  "🕌 Islamic"
+              ):
+                  islamic_count += 1
+
+          # ============================================================
+          # WRITE PLAYLIST
+          # ============================================================
+
+          with open(
+              "playlist.m3u",
+              "w",
+              encoding="utf-8"
+          ) as file:
+
+              file.write("#EXTM3U\n")
+
+              for entry in final:
+                  file.write(
+                      entry["extinf"] + "\n"
+                  )
+                  file.write(
+                      entry["url"] + "\n"
+                  )
+
+          print("")
+          print("================================")
+          print("CAR TV PLAYLIST CREATED")
+          print("================================")
+          print("Arabic:", arabic_count)
+          print("Egypt:", egypt_count)
+          print("Arabic Music:", music_count)
+          print("Pop:", pop_count)
+          print("Jazz:", jazz_count)
+          print("Chill:", chill_count)
+          print("Islamic:", islamic_count)
+          print("TOTAL:", len(final))
+          print("================================")
+          PY
+
+      - name: Commit playlist
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add playlist.m3u
+
+          if git diff --cached --quiet; then
+            echo "No playlist changes."
+            exit 0
+          fi
+
+          git commit -m "Build CarTV playlist"
+
+          git pull --rebase origin main
+
+          git push origin HEAD:main
