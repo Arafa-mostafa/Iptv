@@ -675,8 +675,6 @@ https://video.yementdy.tv/hls/yementoday.m3u8
 https://hlspackager.akamaized.net/live/DB/ZAGROS_TV/HLS/ZAGROS_TV.m3u8
 #EXTINF:-1 tvg-id="ZarinTV.us@SD" tvg-logo="" group-title="General",Zarin TV (1080p)
 https://fl1002.bozztv.com/gf-zarintv/index.m3u8
-#EXTINF:-1 tvg-id="ZeeAlwan.ae@SD" tvg-logo="https://i.imgur.com/OLuCox7.png" group-title="Entertainment;Series",Zee Alwan (576p) [Not 24/7]
-https://tgn.bozztv.com/gin-dvrfl05/ga-zeealwan/index.m3u8
 #EXTINF:-1 group-title="🇪🇬 Egyptian" tvg-id="HudaTV.eg@SD" tvg-logo="https://i.imgur.com/1UUjU26.png",Huda TV (720p) [Not 24/7]
 https://cdn.bestream.io:19360/elfaro1/elfaro1.m3u8
 #EXTINF:-1 group-title="🎤 Pop" tvg-id="BRIDGEHits.ru@SD" tvg-logo="https://i.imgur.com/sIW9oR4.png",BRIDGE Hits (576p)
