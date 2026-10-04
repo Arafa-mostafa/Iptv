@@ -685,8 +685,8 @@ http://cm.hostlagarto.com:8081/hits360tv/hits360HD.myStream/playlist.m3u8
 https://giatv.bozztv.com/giatv/giatv-kpoptvplay/kpoptvplay/playlist.m3u8
 #EXTINF:-1 group-title="🎤 Pop" tvg-id="KralPopTV.tr@SD" tvg-logo="https://i.imgur.com/ch365lh.png",Kral Pop TV (720p)
 https://dogus-live.daioncdn.net/kralpoptv/playlist.m3u8
-#EXTINF:-1 group-title="🎤 Pop" tvg-id="MCMPop.fr@SD" tvg-logo="https://i.imgur.com/j31lBL7.png",MCM Pop (576p)
-http://193.254.245.162/MCM/index.m3u8
+#EXTINF:-1 group-title="🎤 Pop" tvg-id="MCMPop.fr@SD" tvg-logo="https://i.imgur.com/j31lBL7.png",MCM Pop (580p)
+http://188.115.15.121:8000/play/a014
 #EXTINF:-1 group-title="🎤 Pop" tvg-id="MolahitsTV.es@SD" tvg-logo="https://i.imgur.com/FYcLtqT.png",Molahits TV (720p)
 http://ventdelnord.tv:8080/mola/directe.m3u8
 #EXTINF:-1 group-title="🎤 Pop" tvg-id="MoozHits.ro@SD" tvg-logo="https://i.imgur.com/GwATd3Y.png",Mooz Hits
@@ -733,7 +733,5 @@ https://live.islamchannel.tv/live11/islamtv_english/bitrate1.isml/live.m3u8
 https://ncdn.telewebion.ir/quran/live/playlist.m3u8
 #EXTINF:-1 group-title="🕌 Islamic" tvg-id="QuranTV.pk@SD" tvg-logo="https://i.imgur.com/nc7X3Ux.png",Quran TV (Pakistan) (576p)
 http://103.250.28.74:8000/play/a03e/index.m3u8
-#EXTINF:-1 group-title="🕌 Islamic" tvg-id="RTVIslam.ch@SD" tvg-logo="https://i.ibb.co/LSJqLJw/RTV-LOGO.png",RTV Islam (720p)
-http://5.254.89.106/8714/index.m3u8
 #EXTINF:-1 group-title="🕌 Islamic" tvg-id="TheIslamicNetwork.tt@SD" tvg-logo="https://i.imgur.com/EtQolw6.png",The Islamic Network
 https://video1.getstreamhosting.com:1936/8322/8322/playlist.m3u8
