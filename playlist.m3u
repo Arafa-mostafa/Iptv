@@ -711,7 +711,7 @@ https://dce3793146fef017.mediapackage.us-west-2.amazonaws.com/out/v1/55cdf73af78
 https://tgn.bozztv.com/betterlife/betternature/betternature/index.m3u8
 #EXTINF:-1 group-title="🌙 Chill & Lounge" tvg-id="DroneTV.us@SD" tvg-logo="https://i.ibb.co/S71C9RJC/dronetv.webp",DroneTV (1080p)
 https://airvuz-dronetv-1-us.ohlscdn.wurl.tv/playlist.m3u8
-#EXTINF:-1 group-title="🌙 Chill & Lounge" tvg-id="FunBoxUHD.nl@SD" tvg-logo="https://i.imgur.com/9FJct9o.png" http-user-agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.3",FunBox UHD
+#EXTINF:-1 group-title="🌙 Chill & Lounge" tvg-id="FunBoxUHD.nl@SD" tvg-logo="https://i.imgur.com/9FJct9o.png" http-user-agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.3",FunBox UHD SD
 https://webtvstream.bhtelecom.ba/funbox.m3u8
 #EXTINF:-1 group-title="🌙 Chill & Lounge" tvg-id="MyZenTV.fr@SD" tvg-logo="https://i.imgur.com/fIi8o0C.png",MyZen TV (1080p)
 https://cdn-ue1-prod.tsv2.amagi.tv/linear/amg01255-secomcofites-my-myzen-en-plex/playlist.m3u8
