@@ -693,6 +693,8 @@ https://cdn.bestream.io:19360/elfaro1/elfaro1.m3u8
 http://stream.mcquack.net/320/index.m3u8
 #EXTINF:-1 group-title="🎤 Pop" tvg-id="DanceHits80.ru@SD" tvg-logo="https://i.imgur.com/uMw3kks.png",DanceHits80
 http://dancehits80.denvs.ru:8080/index.m3u8
+#EXTINF:-1 group-title="🎤 Pop" tvg-id="HindiHits.in@SD" tvg-logo="https://i.postimg.cc/ryC1Y2K4/Capture.png",Hindi Hits (720p)
+https://samitaorigin.tangotv.in/HINDIHITS/SAMITAORIGIN/index.m3u8
 #EXTINF:-1 group-title="🎤 Pop" tvg-id="Hits360TV.do@SD" tvg-logo="https://i.imgur.com/Cx5V233.jpg",Hits 360 TV (720p) [Not 24/7]
 http://cm.hostlagarto.com:8081/hits360tv/hits360HD.myStream/playlist.m3u8
 #EXTINF:-1 group-title="🎤 Pop" tvg-id="KpopTVPlay.br@SD" tvg-logo="https://i.imgur.com/Tf0vweF.png",KpopTV Play (576p)
@@ -707,8 +709,6 @@ http://ventdelnord.tv:8080/mola/directe.m3u8
 https://tvextra-hls.b-cdn.net/moozhits/moozhits.m3u8
 #EXTINF:-1 group-title="🎤 Pop" tvg-id="MTVBiggestPop.us@US" tvg-logo="https://images.pluto.tv/channels/6047fbdbbb776a0007e7f2ff/colorLogoPNG.png",MTV Biggest Pop (1080p)
 https://jmp2.uk/plu-5d14fd1a252d35decbc4080c.m3u8
-#EXTINF:-1 group-title="🎤 Pop" tvg-id="MTVBiggestPop.us@BR" tvg-logo="https://images.pluto.tv/channels/6047fbdbbb776a0007e7f2ff/colorLogoPNG.png",MTV Biggest Pop BR (1080p)
-https://jmp2.uk/plu-6047fbdbbb776a0007e7f2ff.m3u8
 #EXTINF:-1 group-title="🎷 Jazz" tvg-id="JazzTV.mk@SD" tvg-logo="https://i.imgur.com/CbQlSFX.png",Jazz TV (1080p) [Not 24/7]
 https://stream.nasatv.com.mk/jazztv/hls/jazztv_live.m3u8
 #EXTINF:-1 group-title="🎷 Jazz" tvg-id="QwestTVJazzBeyond.fr@SD" tvg-logo="https://i.imgur.com/89yWH5L.png",Qwest TV Jazz & Beyond (1080p)
