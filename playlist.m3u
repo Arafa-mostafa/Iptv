@@ -691,12 +691,12 @@ https://giatv.bozztv.com/giatv/giatv-kpoptvplay/kpoptvplay/playlist.m3u8
 https://dogus-live.daioncdn.net/kralpoptv/playlist.m3u8
 #EXTINF:-1 group-title="🎤 Pop" tvg-id="MCMPop.fr@SD" tvg-logo="https://i.imgur.com/j31lBL7.png",MCM Pop (580p)
 http://188.115.15.121:8000/play/a014
+#EXTINF:-1 group-title="🎤 Pop" tvg-id="MiMusicaHits.us@SD" tvg-logo="https://i.imgur.com/z9MlLFL.png",Mi Musica Hits (720p)
+http://38.188.186.47:4000/play/a04n/index.m3u8
 #EXTINF:-1 group-title="🎤 Pop" tvg-id="MolahitsTV.es@SD" tvg-logo="https://i.imgur.com/FYcLtqT.png",Molahits TV (720p)
 http://ventdelnord.tv:8080/mola/directe.m3u8
 #EXTINF:-1 group-title="🎤 Pop" tvg-id="MoozHits.ro@SD" tvg-logo="https://i.imgur.com/GwATd3Y.png",Mooz Hits
 https://tvextra-hls.b-cdn.net/moozhits/moozhits.m3u8
-#EXTINF:-1 group-title="🎤 Pop" tvg-id="MTVBiggestPop.us@US" tvg-logo="https://images.pluto.tv/channels/6047fbdbbb776a0007e7f2ff/colorLogoPNG.png",MTV Biggest Pop (1080p)
-https://jmp2.uk/plu-5d14fd1a252d35decbc4080c.m3u8
 #EXTINF:-1 group-title="🎷 Jazz" tvg-id="JazzTV.mk@SD" tvg-logo="https://i.imgur.com/CbQlSFX.png",Jazz TV (1080p) [Not 24/7]
 https://stream.nasatv.com.mk/jazztv/hls/jazztv_live.m3u8
 #EXTINF:-1 group-title="🎷 Jazz" tvg-id="QwestTVJazzBeyond.fr@SD" tvg-logo="https://i.imgur.com/89yWH5L.png",Qwest TV Jazz & Beyond (1080p)
