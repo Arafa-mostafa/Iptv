@@ -683,16 +683,16 @@ https://cdn.bestream.io:19360/elfaro1/elfaro1.m3u8
 http://5.188.159.128:8070/Bridge_TV_Hits/index.m3u8
 #EXTINF:-1 group-title="🎤 Pop" tvg-id="DanceHits80.ru@SD" tvg-logo="https://i.imgur.com/uMw3kks.png",DanceHits80
 http://dancehits80.denvs.ru:8080/index.m3u8
-#EXTINF:-1 group-title="🎤 Pop" tvg-id="HindiHits.in@SD" tvg-logo="https://i.postimg.cc/ryC1Y2K4/Capture.png",Hindi Hits (720p)
-https://samitaorigin.tangotv.in/HINDIHITS/SAMITAORIGIN/index.m3u8
+#EXTINF:-1 group-title="🎤 Pop" tvg-id="HindiHits.in@SD" tvg-logo="https://i.postimg.cc/ryC1Y2K4/Capture.png",Hindi Hits (1080p)
+http://146.59.253.52:8080/hindihitshd/index.m3u8
 #EXTINF:-1 group-title="🎤 Pop" tvg-id="Hits360TV.do@SD" tvg-logo="https://i.imgur.com/Cx5V233.jpg",Hits 360 TV (720p) [Not 24/7]
 http://cm.hostlagarto.com:8081/hits360tv/hits360HD.myStream/playlist.m3u8
 #EXTINF:-1 group-title="🎤 Pop" tvg-id="KpopTVPlay.br@SD" tvg-logo="https://i.imgur.com/Tf0vweF.png",KpopTV Play (576p)
 https://giatv.bozztv.com/giatv/giatv-kpoptvplay/kpoptvplay/playlist.m3u8
 #EXTINF:-1 group-title="🎤 Pop" tvg-id="KralPopTV.tr@SD" tvg-logo="https://i.imgur.com/ch365lh.png",Kral Pop TV (720p)
 https://dogus-live.daioncdn.net/kralpoptv/playlist.m3u8
-#EXTINF:-1 group-title="🎤 Pop" tvg-id="MCMPop.fr@SD" tvg-logo="https://i.imgur.com/j31lBL7.png",MCM Pop (580p)
-http://188.115.15.121:8000/play/a014
+#EXTINF:-1 group-title="🎤 Pop" tvg-id="MCMPop.fr@SD" tvg-logo="https://i.imgur.com/j31lBL7.png",MCM Pop
+http://176.65.153.78:8201/play/a070/index.m3u8
 #EXTINF:-1 group-title="🎤 Pop" tvg-id="MiMusicaHits.us@SD" tvg-logo="https://i.imgur.com/z9MlLFL.png",Mi Musica Hits (720p)
 http://38.188.186.47:4000/play/a04n/index.m3u8
 #EXTINF:-1 group-title="🎤 Pop" tvg-id="MolahitsTV.es@SD" tvg-logo="https://i.imgur.com/FYcLtqT.png",Molahits TV (720p)
